@@ -1,7 +1,9 @@
 # Production Optimization of a Mature Oil Well Using IPR–VLP Nodal Analysis
 
 **Author:** David Damanik
+
 **Project type:** Independent portfolio case study (synthetic field data, real petroleum engineering methodology)
+
 **Tools:** Python (NumPy, SciPy, Matplotlib) — full black-oil PVT correlations, composite IPR, multiphase VLP, nodal solver
 
 ---
