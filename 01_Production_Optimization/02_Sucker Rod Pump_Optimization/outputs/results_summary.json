@@ -1,0 +1,121 @@
+{
+  "fleet_results": [
+    {
+      "well": "A-01",
+      "diagnosis": "Normal operation",
+      "recommendation": "No intervention required - continue routine surveillance.",
+      "note": "Near-rectangular card, area_ratio=0.865.",
+      "features": {
+        "pprl": 8268.559175199796,
+        "mprl": 3081.1327332258993,
+        "load_range": 5187.426441973897,
+        "area_ratio": 0.865,
+        "top_tilt_lbf_per_in": 0.2,
+        "notch_ratio": 0.006
+      },
+      "theoretical_pd_bopd": 148.5,
+      "actual_rate_bopd": 142,
+      "volumetric_efficiency_pct": 95.6,
+      "lost_production_bopd": 6.5
+    },
+    {
+      "well": "B-02",
+      "diagnosis": "Gas interference",
+      "recommendation": "Check/install gas anchor, consider lowering pump intake below perforations, evaluate SPM reduction to allow better gas separation.",
+      "note": "Rounded, compressed card (area_ratio=0.418) without a sharp notch or tilt.",
+      "features": {
+        "pprl": 6284.519024121924,
+        "mprl": 4089.30002616243,
+        "load_range": 2195.218997959494,
+        "area_ratio": 0.418,
+        "top_tilt_lbf_per_in": 8.0,
+        "notch_ratio": 0.02
+      },
+      "theoretical_pd_bopd": 160.0,
+      "actual_rate_bopd": 61,
+      "volumetric_efficiency_pct": 38.1,
+      "lost_production_bopd": 99.0
+    },
+    {
+      "well": "B-03",
+      "diagnosis": "Fluid pound (pump-off / low fluid level)",
+      "recommendation": "Reduce SPM or stroke length, consider pump-off controller / timer to match runtime to inflow, verify fluid level.",
+      "note": "Sharp load notch on downstroke, notch_ratio=0.252.",
+      "features": {
+        "pprl": 8697.948943389307,
+        "mprl": 1297.776678913427,
+        "load_range": 7400.172264475879,
+        "area_ratio": 0.668,
+        "top_tilt_lbf_per_in": 3.5,
+        "notch_ratio": 0.252
+      },
+      "theoretical_pd_bopd": 151.1,
+      "actual_rate_bopd": 58,
+      "volumetric_efficiency_pct": 38.4,
+      "lost_production_bopd": 93.1
+    },
+    {
+      "well": "B-04",
+      "diagnosis": "Worn / leaking traveling valve",
+      "recommendation": "Schedule workover to pull and inspect/replace traveling valve ball & seat; monitor volumetric efficiency in the meantime.",
+      "note": "Diagonal top edge instead of flat plateau, tilt=10.9 lbf/in.",
+      "features": {
+        "pprl": 6047.795782415034,
+        "mprl": 2967.91466698417,
+        "load_range": 3079.8811154308646,
+        "area_ratio": 0.584,
+        "top_tilt_lbf_per_in": 10.9,
+        "notch_ratio": 0.013
+      },
+      "theoretical_pd_bopd": 97.1,
+      "actual_rate_bopd": 39,
+      "volumetric_efficiency_pct": 40.2,
+      "lost_production_bopd": 58.1
+    },
+    {
+      "well": "B-05",
+      "diagnosis": "Parted rod / stuck pump (mechanical failure)",
+      "recommendation": "Shut down immediately, pull rods on next available rig, inspect rod string/pump for parting or plunger sticking.",
+      "note": "Card collapsed to a thin sliver - almost no work being done at surface.",
+      "features": {
+        "pprl": 2125.3437932983666,
+        "mprl": 1834.0622067027514,
+        "load_range": 291.2815865956152,
+        "area_ratio": 0.024,
+        "top_tilt_lbf_per_in": 2.5,
+        "notch_ratio": 0.227
+      },
+      "theoretical_pd_bopd": 182.8,
+      "actual_rate_bopd": 4,
+      "volumetric_efficiency_pct": 2.2,
+      "lost_production_bopd": 178.8
+    },
+    {
+      "well": "B-06",
+      "diagnosis": "Normal operation",
+      "recommendation": "No intervention required - continue routine surveillance.",
+      "note": "Near-rectangular card, area_ratio=0.845.",
+      "features": {
+        "pprl": 5274.1415202491025,
+        "mprl": 2163.9882029199484,
+        "load_range": 3110.153317329154,
+        "area_ratio": 0.845,
+        "top_tilt_lbf_per_in": 2.5,
+        "notch_ratio": 0.013
+      },
+      "theoretical_pd_bopd": 87.5,
+      "actual_rate_bopd": 83,
+      "volumetric_efficiency_pct": 94.9,
+      "lost_production_bopd": 4.5
+    }
+  ],
+  "ranked_priority": [
+    "B-05",
+    "B-02",
+    "B-03",
+    "B-04",
+    "A-01",
+    "B-06"
+  ],
+  "classifier_accuracy_on_synthetic_fleet": "6/6 (100%)"
+}
