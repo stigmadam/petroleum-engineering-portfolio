@@ -131,8 +131,5 @@ Deliverability collapses sharply as reservoir pressure depletes — a ~33% drop 
 
 - Well and reservoir data are synthetic, built to realistic field ranges for methodology demonstration.
 - VLP uses a no-slip homogeneous multiphase model rather than a full mechanistic/empirical slip correlation; accuracy degrades at low rates where liquid loading becomes significant (relevant to §5.4 low-P_r cases).
-- IPR is held as a static composite/Vogel model; no formal decline-curve linkage to time is included (a natural extension for Project 4 / reservoir work).
-- Next logical step in this portfolio: **Project 2 — SRP artificial lift diagnostics**, picking up exactly where this well's natural-flow runway ends.
-
+- IPR is held as a static composite/Vogel model; no formal decline-curve linkage to time is included.
 ---
-*All source code, PVT correlations, and the full model are included in `/src`. Run `python src/run_analysis.py` to regenerate all figures and `outputs/results_summary.json`.*
