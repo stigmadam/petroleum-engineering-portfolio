@@ -87,7 +87,3 @@ Ranking by lost production (not just diagnosis category) changes the interventio
 - Cards are synthetically generated to reproduce recognizable textbook shape signatures, not derived from a rod-string wave-equation model or real SCADA data.
 - The rule-based thresholds (e.g. notch ratio > 0.20, tilt > 8 lbf/in) are calibrated against this synthetic generator; deploying against real field cards would require re-calibrating thresholds against labeled historical data, and a larger dataset would justify moving to a trained classifier (e.g. decision tree/CNN on card images) rather than hand-set rules.
 - The pump-displacement formula assumes 100% barrel factor and full plunger travel; in practice, rod stretch and tubing movement (over-travel/under-travel) shift effective stroke length at depth — a refinement worth adding if this tool were extended toward deployment.
-- **Next step in this portfolio:** Project 3 (Well Intervention Decision Case) picks up directly from this ranking — turning the diagnosis + lost-production numbers into a cost/benefit case for each recommended intervention.
-
----
-*All source code is included in `/src`. Run `python src/run_analysis.py` to regenerate all figures and `outputs/results_summary.json`.*
