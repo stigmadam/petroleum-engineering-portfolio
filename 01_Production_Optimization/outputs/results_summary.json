@@ -1,0 +1,30 @@
+{
+  "productivity_index_stb_d_psi": 0.6105,
+  "base_case_operating_point": {
+    "qo_stb_d": 368.0,
+    "pwf_psi": 1164.2
+  },
+  "tubing_sensitivity_stb_d": {
+    "2-3/8\" (1.995 in ID)": 337.4,
+    "2-7/8\" (2.441 in ID) - base": 368.0,
+    "3-1/2\" (2.992 in ID)": 381.8
+  },
+  "whp_sensitivity_stb_d": {
+    "100 psi": 456.6,
+    "150 psi": 368.0,
+    "200 psi": 272.6,
+    "300 psi": 74.7
+  },
+  "water_cut_sensitivity_stb_d": {
+    "35%": 368.0,
+    "50%": 228.4,
+    "65%": 31.1,
+    "80%": null
+  },
+  "reservoir_depletion_sensitivity_stb_d": {
+    "Pr=1800 psi": 368.0,
+    "Pr=1600 psi": 256.9,
+    "Pr=1400 psi": 142.8,
+    "Pr=1200 psi": 24.7
+  }
+}
