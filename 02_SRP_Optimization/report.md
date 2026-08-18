@@ -14,7 +14,7 @@ Well surveillance teams routinely monitor surface dynamometer cards (polished-ro
 2. Classifies the likely failure mode using a rule-based decision tree calibrated to the classic card-shape signatures taught in artificial-lift surveillance training.
 3. Converts the diagnosis into a **production-loss number** (theoretical vs. actual pump displacement), so wells can be ranked by economic priority rather than just flagged as "abnormal."
 
-This directly extends real experience: monitoring two real-time producing SRP wells and evaluating non-pumping/floating-rod cases during the PHR internship. The well **A-01** in this fleet is the same well used in Project 1 (Production Optimization), now shown after conversion to artificial lift once natural flow could no longer sustain economic rates — the two projects tell one continuous field-life story.
+This directly extends real experience: monitoring two real-time producing SRP wells and evaluating non-pumping/floating-rod cases during the PHR internship. The well **A-01** in this fleet is the same well used in Project 1 (Production Optimization), now shown after conversion to artificial lift once natural flow could no longer sustain economic rates.
 
 ## 2. Methodology
 
