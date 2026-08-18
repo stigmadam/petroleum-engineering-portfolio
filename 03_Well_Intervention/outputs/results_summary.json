@@ -1,0 +1,108 @@
+{
+  "economic_assumptions": {
+    "oil_price_usd_bbl": 70.0,
+    "variable_opex_usd_bbl": 15.0,
+    "discount_rate_annual": 0.1,
+    "decline_rate_monthly": 0.02,
+    "eval_months": 12
+  },
+  "well_recommendations": [
+    {
+      "well": "B-05",
+      "diagnosis": "Parted rod / stuck pump (mechanical failure)",
+      "recommended_intervention": "Workover \u2014 Pull & Replace Rod String",
+      "npv_usd": 2696671.0,
+      "payout_months": 0.35,
+      "roi_pct": 2838.6
+    },
+    {
+      "well": "B-02",
+      "diagnosis": "Gas interference",
+      "recommended_intervention": "Lower Pump Setting Depth (Workover)",
+      "npv_usd": 1156112.0,
+      "payout_months": 0.55,
+      "roi_pct": 1778.6
+    },
+    {
+      "well": "B-03",
+      "diagnosis": "Fluid pound (pump-off / low fluid level)",
+      "recommended_intervention": "Install Pump-Off Controller (POC)",
+      "npv_usd": 849254.0,
+      "payout_months": 0.14,
+      "roi_pct": 7077.1
+    },
+    {
+      "well": "B-04",
+      "diagnosis": "Worn / leaking traveling valve",
+      "recommended_intervention": "Full Workover (Rig, pull tubing + rods)",
+      "npv_usd": 784912.0,
+      "payout_months": 1.0,
+      "roi_pct": 923.4
+    }
+  ],
+  "fleet_capital_allocation_ranking": [
+    {
+      "well": "B-03",
+      "intervention": "Reduce SPM (operational adjustment only)",
+      "cost_usd": 500,
+      "npv_usd": 529809.0,
+      "capital_efficiency": 1059.62,
+      "payout_months": 0.01
+    },
+    {
+      "well": "B-03",
+      "intervention": "Install Pump-Off Controller (POC)",
+      "cost_usd": 12000,
+      "npv_usd": 849254.0,
+      "capital_efficiency": 70.77,
+      "payout_months": 0.14
+    },
+    {
+      "well": "B-02",
+      "intervention": "Install Gas Anchor",
+      "cost_usd": 15000,
+      "npv_usd": 777875.0,
+      "capital_efficiency": 51.86,
+      "payout_months": 0.19
+    },
+    {
+      "well": "B-05",
+      "intervention": "Workover \u2014 Pull & Replace Rod String",
+      "cost_usd": 95000,
+      "npv_usd": 2696671.0,
+      "capital_efficiency": 28.39,
+      "payout_months": 0.35
+    },
+    {
+      "well": "B-04",
+      "intervention": "Slickline Traveling/Standing Valve Replacement",
+      "cost_usd": 28000,
+      "npv_usd": 569194.0,
+      "capital_efficiency": 20.33,
+      "payout_months": 0.48
+    },
+    {
+      "well": "B-02",
+      "intervention": "Lower Pump Setting Depth (Workover)",
+      "cost_usd": 65000,
+      "npv_usd": 1156112.0,
+      "capital_efficiency": 17.79,
+      "payout_months": 0.55
+    },
+    {
+      "well": "B-04",
+      "intervention": "Full Workover (Rig, pull tubing + rods)",
+      "cost_usd": 85000,
+      "npv_usd": 784912.0,
+      "capital_efficiency": 9.23,
+      "payout_months": 1.0
+    }
+  ],
+  "oil_price_sensitivity_usd_npv": {
+    "$50/bbl": 3398240.0,
+    "$60/bbl": 4442595.0,
+    "$70/bbl": 5486949.0,
+    "$80/bbl": 6531304.0,
+    "$90/bbl": 7575659.0
+  }
+}
