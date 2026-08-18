@@ -100,6 +100,3 @@ The recommended portfolio's total NPV was tested from $50–90/bbl. Even at $50/
 - The evaluation horizon is fixed at 12 months; a longer horizon would further favor higher-recovery, higher-cost options like full workovers.
 - Success probabilities are single-point estimates; a natural extension is a Monte Carlo simulation over cost, recovery fraction, and success probability distributions to produce a P10/P50/P90 NPV range instead of a single number.
 - This project deliberately does not re-diagnose the wells — it assumes Project 2's diagnosis is correct. A real workflow would sanity-check the diagnosis against additional data (well test, fluid shot) before committing capital.
-
----
-*All source code is included in `/src`. Run `python src/run_analysis.py` to regenerate all figures and `outputs/results_summary.json`.*
