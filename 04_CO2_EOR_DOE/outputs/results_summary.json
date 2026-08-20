@@ -1,0 +1,256 @@
+{
+  "fields": {
+    "X": {
+      "levels": {
+        "initial_oil_cut": [
+          0.002,
+          0.015
+        ],
+        "pattern_area": [
+          "20",
+          "70"
+        ],
+        "porosity": [
+          0.07,
+          0.16
+        ],
+        "permeability": [
+          "50",
+          "250"
+        ],
+        "thickness": [
+          "100",
+          "300"
+        ],
+        "dp_coefficient": [
+          0.3,
+          0.6
+        ]
+      },
+      "top5_effects": [
+        {
+          "term": "B",
+          "standardized_effect": 57.58
+        },
+        {
+          "term": "E",
+          "standardized_effect": 51.27
+        },
+        {
+          "term": "C",
+          "standardized_effect": 37.92
+        },
+        {
+          "term": "BE",
+          "standardized_effect": 23.32
+        },
+        {
+          "term": "BC",
+          "standardized_effect": 16.12
+        }
+      ],
+      "t_crit": 2.018,
+      "n_significant_terms": 14,
+      "raw_model": {
+        "shapiro": {
+          "shapiro_stat": 0.9652,
+          "p_value": 0.0682,
+          "normal_at_5pct": "True"
+        },
+        "variance_check": {
+          "bin_variances": [
+            0.692,
+            0.103,
+            0.409,
+            1.189
+          ],
+          "variance_ratio": 11.53
+        }
+      },
+      "log_transformed_model": {
+        "shapiro": {
+          "shapiro_stat": 0.9903,
+          "p_value": 0.8998,
+          "normal_at_5pct": "True"
+        },
+        "variance_check": {
+          "bin_variances": [
+            0.874,
+            0.367,
+            0.262,
+            0.568
+          ],
+          "variance_ratio": 3.34
+        }
+      }
+    },
+    "Y": {
+      "levels": {
+        "initial_oil_cut": [
+          0.001,
+          0.01
+        ],
+        "pattern_area": [
+          "20",
+          "60"
+        ],
+        "porosity": [
+          0.07,
+          0.23
+        ],
+        "permeability": [
+          "100",
+          "200"
+        ],
+        "thickness": [
+          "60",
+          "120"
+        ],
+        "dp_coefficient": [
+          0.4,
+          0.6
+        ]
+      },
+      "top5_effects": [
+        {
+          "term": "C",
+          "standardized_effect": 33.87
+        },
+        {
+          "term": "B",
+          "standardized_effect": 30.88
+        },
+        {
+          "term": "E",
+          "standardized_effect": 21.31
+        },
+        {
+          "term": "BC",
+          "standardized_effect": 16.14
+        },
+        {
+          "term": "CE",
+          "standardized_effect": 11.25
+        }
+      ],
+      "t_crit": 2.018,
+      "n_significant_terms": 11,
+      "raw_model": {
+        "shapiro": {
+          "shapiro_stat": 0.9558,
+          "p_value": 0.0224,
+          "normal_at_5pct": "False"
+        },
+        "variance_check": {
+          "bin_variances": [
+            0.443,
+            0.464,
+            0.177,
+            1.002
+          ],
+          "variance_ratio": 5.66
+        }
+      },
+      "log_transformed_model": {
+        "shapiro": {
+          "shapiro_stat": 0.8829,
+          "p_value": 2e-05,
+          "normal_at_5pct": "False"
+        },
+        "variance_check": {
+          "bin_variances": [
+            1.336,
+            0.612,
+            0.364,
+            0.242
+          ],
+          "variance_ratio": 5.53
+        }
+      }
+    },
+    "Z": {
+      "levels": {
+        "initial_oil_cut": [
+          0.01,
+          0.05
+        ],
+        "pattern_area": [
+          "20",
+          "60"
+        ],
+        "porosity": [
+          0.07,
+          0.204
+        ],
+        "permeability": [
+          "10",
+          "40"
+        ],
+        "thickness": [
+          "100",
+          "150"
+        ],
+        "dp_coefficient": [
+          0.3,
+          0.6
+        ]
+      },
+      "top5_effects": [
+        {
+          "term": "B",
+          "standardized_effect": 49.37
+        },
+        {
+          "term": "C",
+          "standardized_effect": 48.18
+        },
+        {
+          "term": "BC",
+          "standardized_effect": 23.73
+        },
+        {
+          "term": "E",
+          "standardized_effect": 19.49
+        },
+        {
+          "term": "BE",
+          "standardized_effect": 9.84
+        }
+      ],
+      "t_crit": 2.018,
+      "n_significant_terms": 10,
+      "raw_model": {
+        "shapiro": {
+          "shapiro_stat": 0.9702,
+          "p_value": 0.12387,
+          "normal_at_5pct": "True"
+        },
+        "variance_check": {
+          "bin_variances": [
+            0.56,
+            0.115,
+            0.152,
+            1.019
+          ],
+          "variance_ratio": 8.85
+        }
+      },
+      "log_transformed_model": {
+        "shapiro": {
+          "shapiro_stat": 0.9846,
+          "p_value": 0.60755,
+          "normal_at_5pct": "True"
+        },
+        "variance_check": {
+          "bin_variances": [
+            0.652,
+            0.57,
+            0.682,
+            0.655
+          ],
+          "variance_ratio": 1.2
+        }
+      }
+    }
+  }
+}
