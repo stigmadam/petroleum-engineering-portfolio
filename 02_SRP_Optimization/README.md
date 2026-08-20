@@ -5,7 +5,7 @@ A fully explainable artificial-lift diagnostic tool built from scratch in Python
 **➡️ [Read the full report](report.md)**
 
 ## Key result
-Classifier scored **6/6 (100%)** on the synthetic test fleet. More importantly, ranking wells by **lost production** (not diagnosis category alone) reordered intervention priority versus a naive "worst-looking card first" approach — B-05's mechanical failure (179 bopd deferred, 2.2% efficiency) is the clear top priority, ahead of gas interference and fluid-pound cases that look visually dramatic but cost less.
+Classifier correctly identified 6/6 (100%) synthetic test cases. More importantly, the analysis showed that intervention priority should be based on estimated production loss rather than diagnosis category alone. B-05's mechanical failure represents the highest-priority intervention candidate in this synthetic fleet, with 179 BOPD of estimated deferred production and 2.2% volumetric efficiency, ranking ahead of gas-interference and fluid-pound cases despite their more visually dramatic dynamometer-card signatures.
 
 ## Structure
 ```
