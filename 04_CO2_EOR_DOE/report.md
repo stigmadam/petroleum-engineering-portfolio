@@ -100,5 +100,4 @@ Instead, this project tests the one legitimate, **data-only** remedy available: 
 - The log-transform remedy is a legitimate variance-stabilization technique, but it does not replace a true RSM/CCD study where curvature needs to be *quantified* (e.g. for optimization), only where the *existing linear ranking* needs more trustworthy residual behavior.
 - Six-way saturated model + higher-order-interaction error pooling assumes those higher-order interactions are genuinely negligible; this is a standard assumption for unreplicated factorials but not independently testable without true replicates.
 
----
 *All source code and the exact raw data tables (transcribed from the thesis) are included in `/src` and `/data`. Run `python src/run_analysis.py` to regenerate all figures and `outputs/results_summary.json`.*
