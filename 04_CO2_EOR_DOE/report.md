@@ -93,11 +93,9 @@ Instead, this project tests the one legitimate, **data-only** remedy available: 
 2. **The residual/model-validity problem is real and reproducible** — not an artifact of the original software or analysis choices.
 3. **A log transform is a legitimate, low-cost first step** that resolves the issue for Fields X and Z without requiring new simulation runs, and should be considered before committing to a full new RSM study for those fields.
 4. **Field Y specifically requires the originally recommended RSM/CCD approach** — the transform-based evidence here strengthens the case that its non-linearity is structurally different from X and Z, giving a more targeted next step than the original "run RSM on everything" recommendation.
-
+  
 ## 8. Limitations
 
 - This project reproduces the *statistical analysis* independently; it does not re-run the underlying EORgui/CO₂PM reservoir simulations — the raw Np values are taken directly from the thesis's reported run matrix.
 - The log-transform remedy is a legitimate variance-stabilization technique, but it does not replace a true RSM/CCD study where curvature needs to be *quantified* (e.g. for optimization), only where the *existing linear ranking* needs more trustworthy residual behavior.
 - Six-way saturated model + higher-order-interaction error pooling assumes those higher-order interactions are genuinely negligible; this is a standard assumption for unreplicated factorials but not independently testable without true replicates.
-
-*All source code and the exact raw data tables (transcribed from the thesis) are included in `/src` and `/data`. Run `python src/run_analysis.py` to regenerate all figures and `outputs/results_summary.json`.*
