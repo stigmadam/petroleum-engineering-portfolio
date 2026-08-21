@@ -2,7 +2,7 @@
 
 A standalone, interactive fleet-surveillance dashboard for an 18-well field — open `outputs/index.html` directly in any browser, no installation, no server, no Python environment required.
 
-**➡️ [Read the full report](report.md)** · **➡️ [Open the live dashboard](outputs/index.html)**
+**➡️ [Read the full report](report.md)** · **➡️ [Open the live dashboard]([outputs/index.html](https://htmlpreview.github.io/?https://github.com/stigmadam/petroleum-engineering-portfolio/blob/main/05_Production_Dashboard/outputs/index.html ))**
 
 ## Key result
 Rule-based attention classifier (consistent with Projects 1–3's diagnostic vocabulary) surfaces **2 Critical and 6 Watch wells out of 18** from 52 weeks of synthetic weekly production data — a realistic triage distribution, with inline sparklines and click-to-expand trend charts explaining *why* each well was flagged, not just that it was.
