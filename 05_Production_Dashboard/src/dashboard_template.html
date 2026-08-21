@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field Surveillance — Production Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#14181C; --panel:#1B2127; --panel-alt:#20262D; --border:#2B323A; --border-soft:#242B32;
+    --text-primary:#E6EDF3; --text-secondary:#8B949E; --text-tertiary:#5B6470;
+    --accent:#F0A020; --accent-dim:#8A5F1E;
+    --oil:#F0A020; --water:#4C8EDB; --gas:#3FB0A0;
+    --normal:#3FB950; --watch:#F0A020; --critical:#F85149;
+    --font-display:'Oswald',sans-serif; --font-body:'Inter',sans-serif; --font-mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg); color:var(--text-primary); font-family:var(--font-body);
+    padding:20px; min-height:100vh;
+  }
+  .wrap{max-width:1360px; margin:0 auto;}
+
+  /* ---------- header ---------- */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid var(--border); padding-bottom:16px; margin-bottom:20px;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand-bar{width:5px; height:30px; background:var(--accent); border-radius:1px;}
+  h1{font-family:var(--font-display); font-weight:600; font-size:22px; letter-spacing:0.5px; text-transform:uppercase;}
+  .subtitle{font-size:11px; color:var(--text-tertiary); font-family:var(--font-mono); margin-top:2px; letter-spacing:0.5px;}
+  .live-status{display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);}
+  .live-dot{width:8px; height:8px; border-radius:50%; background:var(--normal); box-shadow:0 0 8px var(--normal); animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.4;}}
+
+  /* ---------- KPI gauge row ---------- */
+  .kpi-row{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px;}
+  .kpi-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:6px;
+    padding:16px 18px; display:flex; align-items:center; gap:16px;
+  }
+  .gauge{position:relative; width:64px; height:64px; flex-shrink:0;}
+  .gauge svg{transform:rotate(-90deg);}
+  .gauge-bg{fill:none; stroke:var(--border-soft); stroke-width:6;}
+  .gauge-fg{fill:none; stroke-width:6; stroke-linecap:round; transition:stroke-dashoffset 0.6s ease;}
+  .gauge-label{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:13px; font-weight:600;
+  }
+  .kpi-meta{display:flex; flex-direction:column; gap:3px;}
+  .kpi-title{font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--text-tertiary); font-weight:600;}
+  .kpi-value{font-family:var(--font-mono); font-size:19px; font-weight:600; color:var(--text-primary);}
+  .kpi-sub{font-size:11px; color:var(--text-secondary); font-family:var(--font-mono);}
+  .kpi-sub.up{color:var(--normal);} .kpi-sub.down{color:var(--critical);}
+
+  /* ---------- panels ---------- */
+  .panel{background:var(--panel); border:1px solid var(--border); border-radius:6px; padding:18px; margin-bottom:16px;}
+  .panel-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+  .panel-title{font-family:var(--font-display); font-size:14px; text-transform:uppercase; letter-spacing:1px; color:var(--text-primary); font-weight:600;}
+  .panel-title .count{color:var(--accent); font-family:var(--font-mono);}
+  .toggle-group{display:flex; gap:4px; background:var(--panel-alt); padding:3px; border-radius:5px;}
+  .toggle-btn{
+    font-family:var(--font-mono); font-size:11px; padding:5px 10px; border-radius:4px; cursor:pointer;
+    color:var(--text-secondary); border:none; background:transparent; transition:all .15s;
+  }
+  .toggle-btn.active{background:var(--accent); color:#14181C; font-weight:600;}
+
+  .chart-wrap{height:280px; position:relative;}
+
+  /* ---------- two-column layout ---------- */
+  .split{display:grid; grid-template-columns:1.3fr 1fr; gap:16px;}
+  @media (max-width:900px){.split{grid-template-columns:1fr;}}
+
+  /* ---------- well table ---------- */
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th{
+    text-align:left; font-family:var(--font-mono); font-size:10px; text-transform:uppercase;
+    letter-spacing:0.5px; color:var(--text-tertiary); font-weight:500; padding:8px 10px;
+    border-bottom:1px solid var(--border); cursor:pointer; user-select:none;
+  }
+  th:hover{color:var(--accent);}
+  td{padding:9px 10px; border-bottom:1px solid var(--border-soft); font-family:var(--font-mono); font-size:12.5px;}
+  tr.well-row{cursor:pointer; transition:background .12s;}
+  tr.well-row:hover{background:var(--panel-alt);}
+  tr.well-row.selected{background:var(--panel-alt); box-shadow:inset 3px 0 0 var(--accent);}
+  .well-table-scroll{max-height:360px; overflow-y:auto;}
+  .status-pill{
+    display:inline-flex; align-items:center; gap:5px; font-size:10.5px; font-weight:600;
+    padding:2px 8px; border-radius:20px; text-transform:uppercase; letter-spacing:0.3px;
+  }
+  .status-pill.Normal{background:rgba(63,185,80,0.14); color:var(--normal);}
+  .status-pill.Watch{background:rgba(240,160,32,0.14); color:var(--watch);}
+  .status-pill.Critical{background:rgba(248,81,73,0.14); color:var(--critical);}
+  .status-dot{width:6px; height:6px; border-radius:50%; background:currentColor;}
+  .change-up{color:var(--normal);} .change-down{color:var(--critical);}
+
+  /* ---------- detail panel ---------- */
+  .detail-empty{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    height:280px; color:var(--text-tertiary); font-size:13px; text-align:center; gap:6px;
+  }
+  .detail-header{display:flex; align-items:baseline; gap:10px; margin-bottom:12px;}
+  .detail-name{font-family:var(--font-display); font-size:20px; font-weight:600;}
+  .detail-lift{font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); text-transform:uppercase; padding:2px 8px; border:1px solid var(--border); border-radius:4px;}
+  .detail-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px;}
+  .stat-box{background:var(--panel-alt); border-radius:5px; padding:9px 11px;}
+  .stat-label{font-size:9.5px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:3px;}
+  .stat-value{font-family:var(--font-mono); font-size:15px; font-weight:600;}
+
+  /* ---------- anomaly log ---------- */
+  .anomaly-list{display:flex; flex-direction:column; gap:8px; max-height:280px; overflow-y:auto;}
+  .anomaly-item{
+    display:flex; align-items:center; gap:12px; padding:10px 12px; background:var(--panel-alt);
+    border-radius:5px; border-left:3px solid var(--border);
+  }
+  .anomaly-item.Critical{border-left-color:var(--critical);}
+  .anomaly-item.Warning{border-left-color:var(--watch);}
+  .anomaly-month{font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); width:56px; flex-shrink:0;}
+  .anomaly-well{font-family:var(--font-mono); font-size:12.5px; font-weight:600; width:56px; flex-shrink:0;}
+  .anomaly-type{font-size:12px; font-weight:600; width:170px; flex-shrink:0;}
+  .anomaly-type.Critical{color:var(--critical);} .anomaly-type.Warning{color:var(--watch);}
+  .anomaly-detail{font-size:12px; color:var(--text-secondary); flex:1;}
+
+  footer{text-align:center; padding:20px 0 6px; color:var(--text-tertiary); font-size:11px; font-family:var(--font-mono);}
+
+  ::-webkit-scrollbar{width:8px; height:8px;}
+  ::-webkit-scrollbar-track{background:var(--panel-alt);}
+  ::-webkit-scrollbar-thumb{background:var(--border); border-radius:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <div class="brand-bar"></div>
+      <div>
+        <h1>Field Surveillance</h1>
+        <div class="subtitle" id="subtitleText">18-WELL FLEET · 24-MONTH HISTORY · SYNTHETIC DATA</div>
+      </div>
+    </div>
+    <div class="live-status"><div class="live-dot"></div> MONITORING ACTIVE</div>
+  </header>
+
+  <div class="kpi-row" id="kpiRow"></div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">Field Production Trend</div>
+      <div class="toggle-group" id="trendToggle">
+        <button class="toggle-btn active" data-series="all">All</button>
+        <button class="toggle-btn" data-series="oil">Oil</button>
+        <button class="toggle-btn" data-series="water">Water</button>
+        <button class="toggle-btn" data-series="gas">Gas</button>
+      </div>
+    </div>
+    <div class="chart-wrap"><canvas id="fieldChart"></canvas></div>
+  </div>
+
+  <div class="split">
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Well Ranking <span class="count" id="wellCount"></span></div>
+      </div>
+      <div class="well-table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th data-sort="name">Well</th>
+              <th data-sort="current_oil_bopd">Oil (bopd)</th>
+              <th data-sort="pct_change_3mo">Δ 3mo</th>
+              <th data-sort="water_cut_pct">WC %</th>
+              <th data-sort="status">Status</th>
+            </tr>
+          </thead>
+          <tbody id="wellTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Well Detail</div>
+      </div>
+      <div id="detailContent">
+        <div class="detail-empty">
+          ▸ Select a well from the ranking table<br>to view its production history
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">Anomaly Log <span class="count" id="anomalyCount"></span></div>
+    </div>
+    <div class="anomaly-list" id="anomalyList"></div>
+  </div>
+
+  <footer>Production Surveillance Dashboard — Portfolio Project 5 · Synthetic data generated in Python, rendered client-side · No data leaves this page</footer>
+</div>
+
+<script>
+const DATA = /*__DASHBOARD_DATA__*/;
+
+const fmt = (n, d=0) => n.toLocaleString(undefined, {minimumFractionDigits:d, maximumFractionDigits:d});
+
+/* ---------------- KPI gauges ---------------- */
+function gaugeSVG(pct, color, id){
+  const r = 26, c = 2*Math.PI*r, offset = c*(1-Math.min(pct,1));
+  return `<svg width="64" height="64" viewBox="0 0 64 64">
+    <circle class="gauge-bg" cx="32" cy="32" r="${r}"></circle>
+    <circle class="gauge-fg" cx="32" cy="32" r="${r}" stroke="${color}"
+      stroke-dasharray="${c}" stroke-dashoffset="${offset}"></circle>
+  </svg>`;
+}
+
+function renderKPIs(){
+  const k = DATA.kpis;
+  const wellsOKpct = k.n_normal / k.total_wells;
+  const cards = [
+    {title:"Field Oil Rate", value:fmt(k.field_oil_now)+" bopd",
+     sub:(k.field_oil_change_pct>=0?"▲ ":"▼ ")+Math.abs(k.field_oil_change_pct)+"% (6mo)",
+     subClass:k.field_oil_change_pct>=0?"up":"down",
+     gauge:gaugeSVG(0.7,"var(--oil)"), label:""},
+    {title:"Avg Water Cut", value:k.avg_water_cut+"%", sub:"fleet average",
+     subClass:"", gauge:gaugeSVG(k.avg_water_cut/100,"var(--water)"), label:""},
+    {title:"Wells Normal", value:k.n_normal+" / "+k.total_wells, sub:k.n_watch+" watch · "+k.n_critical+" critical",
+     subClass:k.n_critical>0?"down":"up", gauge:gaugeSVG(wellsOKpct,"var(--normal)"), label:""},
+    {title:"Active Alerts", value:k.n_anomalies_total, sub:"events, trailing 24mo",
+     subClass:k.n_anomalies_total>0?"down":"", gauge:gaugeSVG(Math.min(k.n_anomalies_total/10,1),"var(--critical)"), label:""},
+  ];
+  document.getElementById("kpiRow").innerHTML = cards.map(c => `
+    <div class="kpi-card">
+      <div class="gauge">${c.gauge}<div class="gauge-label"></div></div>
+      <div class="kpi-meta">
+        <div class="kpi-title">${c.title}</div>
+        <div class="kpi-value">${c.value}</div>
+        <div class="kpi-sub ${c.subClass}">${c.sub}</div>
+      </div>
+    </div>`).join("");
+}
+
+/* ---------------- field trend chart ---------------- */
+let fieldChart;
+function renderFieldChart(mode="all"){
+  const months = DATA.field_monthly.map(m => "M"+m.month);
+  const oil = DATA.field_monthly.map(m => m.total_oil_bopd);
+  const water = DATA.field_monthly.map(m => m.total_water_bwpd);
+  const gas = DATA.field_monthly.map(m => m.total_gas_mscfd);
+
+  const datasets = [];
+  if(mode==="all"||mode==="oil") datasets.push({label:"Oil (bopd)", data:oil, borderColor:"#F0A020", backgroundColor:"rgba(240,160,32,0.08)", fill:true, tension:0.3, pointRadius:0, borderWidth:2});
+  if(mode==="all"||mode==="water") datasets.push({label:"Water (bwpd)", data:water, borderColor:"#4C8EDB", backgroundColor:"rgba(76,142,219,0.06)", fill:true, tension:0.3, pointRadius:0, borderWidth:2});
+  if(mode==="all"||mode==="gas") datasets.push({label:"Gas (Mscf/d)", data:gas, borderColor:"#3FB0A0", backgroundColor:"rgba(63,176,160,0.06)", fill:true, tension:0.3, pointRadius:0, borderWidth:2, yAxisID: mode==="all"?"y1":"y"});
+
+  if(fieldChart) fieldChart.destroy();
+  const ctx = document.getElementById("fieldChart").getContext("2d");
+  fieldChart = new Chart(ctx, {
+    type:"line", data:{labels:months, datasets},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:"index", intersect:false},
+      plugins:{legend:{labels:{color:"#8B949E", font:{family:"JetBrains Mono", size:11}}}},
+      scales:{
+        x:{ticks:{color:"#5B6470", font:{family:"JetBrains Mono", size:10}}, grid:{color:"#242B32"}},
+        y:{ticks:{color:"#5B6470", font:{family:"JetBrains Mono", size:10}}, grid:{color:"#242B32"}},
+        y1:{position:"right", display:mode==="all", ticks:{color:"#5B6470", font:{family:"JetBrains Mono", size:10}}, grid:{display:false}}
+      }
+    }
+  });
+}
+
+document.getElementById("trendToggle").addEventListener("click", e => {
+  if(!e.target.classList.contains("toggle-btn")) return;
+  document.querySelectorAll("#trendToggle .toggle-btn").forEach(b=>b.classList.remove("active"));
+  e.target.classList.add("active");
+  renderFieldChart(e.target.dataset.series);
+});
+
+/* ---------------- well ranking table ---------------- */
+let sortKey = "current_oil_bopd", sortDir = -1, selectedWell = null;
+
+function renderWellTable(){
+  const wells = [...DATA.wells_summary].sort((a,b)=>{
+    let v = a[sortKey] > b[sortKey] ? 1 : a[sortKey] < b[sortKey] ? -1 : 0;
+    return v * sortDir;
+  });
+  document.getElementById("wellCount").textContent = "["+wells.length+"]";
+  document.getElementById("wellTableBody").innerHTML = wells.map(w => `
+    <tr class="well-row ${w.name===selectedWell?'selected':''}" data-well="${w.name}">
+      <td>${w.name}</td>
+      <td>${fmt(w.current_oil_bopd)}</td>
+      <td class="${w.pct_change_3mo>=0?'change-up':'change-down'}">${w.pct_change_3mo>=0?'+':''}${w.pct_change_3mo}%</td>
+      <td>${w.water_cut_pct}%</td>
+      <td><span class="status-pill ${w.status}"><span class="status-dot"></span>${w.status}</span></td>
+    </tr>`).join("");
+  document.querySelectorAll(".well-row").forEach(row=>{
+    row.addEventListener("click", ()=>{ selectedWell = row.dataset.well; renderWellTable(); renderDetail(selectedWell); });
+  });
+}
+
+document.querySelectorAll("th[data-sort]").forEach(th=>{
+  th.addEventListener("click", ()=>{
+    const key = th.dataset.sort;
+    sortDir = (sortKey===key) ? -sortDir : -1;
+    sortKey = key;
+    renderWellTable();
+  });
+});
+
+/* ---------------- well detail drill-down ---------------- */
+let detailChart;
+function renderDetail(name){
+  const w = DATA.wells_summary.find(x=>x.name===name);
+  const s = DATA.well_series[name];
+  const wellAnomalies = DATA.anomalies.filter(a=>a.well===name);
+
+  document.getElementById("detailContent").innerHTML = `
+    <div class="detail-header">
+      <div class="detail-name">${name}</div>
+      <div class="detail-lift">${s.lift_type}</div>
+    </div>
+    <div class="detail-stats">
+      <div class="stat-box"><div class="stat-label">Current Oil</div><div class="stat-value">${fmt(w.current_oil_bopd)} bopd</div></div>
+      <div class="stat-box"><div class="stat-label">Water Cut</div><div class="stat-value">${w.water_cut_pct}%</div></div>
+      <div class="stat-box"><div class="stat-label">Events Logged</div><div class="stat-value">${wellAnomalies.length}</div></div>
+    </div>
+    <div class="chart-wrap" style="height:180px;"><canvas id="detailChart"></canvas></div>
+  `;
+
+  if(detailChart) detailChart.destroy();
+  const months = s.month.map(m=>"M"+m);
+  const ctx = document.getElementById("detailChart").getContext("2d");
+  detailChart = new Chart(ctx, {
+    type:"line",
+    data:{labels:months, datasets:[
+      {label:"Oil (bopd)", data:s.oil_bopd, borderColor:"#F0A020", pointRadius:0, borderWidth:2, tension:0.3},
+      {label:"Water Cut (%)", data:s.water_cut.map(v=>v*100), borderColor:"#4C8EDB", pointRadius:0, borderWidth:2, tension:0.3, yAxisID:"y1"},
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:"#8B949E", font:{family:"JetBrains Mono", size:10}}}},
+      scales:{
+        x:{ticks:{color:"#5B6470", font:{size:9}}, grid:{color:"#242B32"}},
+        y:{ticks:{color:"#5B6470", font:{size:9}}, grid:{color:"#242B32"}},
+        y1:{position:"right", ticks:{color:"#5B6470", font:{size:9}}, grid:{display:false}}
+      }
+    }
+  });
+}
+
+/* ---------------- anomaly log ---------------- */
+function renderAnomalies(){
+  document.getElementById("anomalyCount").textContent = "["+DATA.anomalies.length+" events]";
+  document.getElementById("anomalyList").innerHTML = DATA.anomalies.map(a => `
+    <div class="anomaly-item ${a.severity}">
+      <div class="anomaly-month">MONTH ${a.month}</div>
+      <div class="anomaly-well">${a.well}</div>
+      <div class="anomaly-type ${a.severity}">${a.type}</div>
+      <div class="anomaly-detail">${a.detail}</div>
+    </div>`).join("");
+}
+
+renderKPIs();
+renderFieldChart("all");
+renderWellTable();
+renderAnomalies();
+</script>
+</body>
+</html>
