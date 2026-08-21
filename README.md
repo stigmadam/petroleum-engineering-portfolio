@@ -29,7 +29,7 @@ Turns Project 2's diagnoses into a funded decision: NPV, payout, ROI, and capita
 Independent Python reproduction of undergraduate thesis research, rebuilt from raw experimental data (not the original Minitab output), matching the thesis's reported standardized effects almost exactly. Extends the thesis's own "future work" recommendation with a log-transform remedy for model heteroscedasticity — fixing it for two of three fields and pinpointing exactly which field still needs full RSM study.
 
 ### [05 — Production Surveillance Dashboard](05_Production_Dashboard/report.md)
-A standalone, interactive fleet-surveillance dashboard for an 18-well field — no installation, no server, opens directly in any browser. Rule-based attention classifier (consistent with Projects 1–3's diagnostic vocabulary) surfaces which wells need attention today, with inline sparklines and click-to-expand trend charts. **[Open the live dashboard →](https://htmlpreview.github.io/?https://github.com/stigmadam/petroleum-engineering-portfolio/blob/main/05_Production_Dashboard/outputs/index.html)**
+A standalone, interactive fleet-surveillance dashboard for an 18-well field — no installation, no server, opens directly in any browser. Rule-based attention classifier (consistent with Projects 1–3's diagnostic vocabulary) surfaces which wells need attention today, with inline sparklines and click-to-expand trend charts. **[Open the live dashboard →](https://stigmadam.github.io/petroleum-engineering-portfolio/05_Production_Dashboard/outputs/index.html)**
 
 ---
 
