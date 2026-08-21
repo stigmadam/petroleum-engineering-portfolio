@@ -1,6 +1,6 @@
 # 05 — Production Surveillance Dashboard
 
-A standalone, interactive fleet-surveillance dashboard for an 18-well field — open `outputs/index.html` directly in any browser, no installation, no server, no Python environment required.
+An interactive fleet-surveillance dashboard covering 18 wells. The dashboard runs directly in any web browser, with no installation, server, or Python environment required.
 
 **➡️ [Read the full report](report.md)** · **➡️ [Open the live dashboard](https://htmlpreview.github.io/?https://github.com/stigmadam/petroleum-engineering-portfolio/blob/main/05_Production_Dashboard/outputs/index.html )**
 
