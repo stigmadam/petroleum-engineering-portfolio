@@ -64,6 +64,3 @@ The visual language is deliberately built around a control-room/telemetry aesthe
 - The attention classifier is intentionally simple and rule-based (matching Projects 1–3's explainable-over-black-box philosophy) — a production deployment would likely calibrate thresholds against a field's own historical data rather than fixed values.
 - No backend/database — data is generated once and embedded directly in the page. A next step toward a real internal tool would add a live data connection (e.g. to a historian or SCADA export) rather than a static snapshot.
 - Chart.js is loaded from a public CDN; an offline-capable version would vendor the library locally.
-
----
-*Data generation code is in `/src`. Run `python src/generate_data.py` to regenerate `outputs/wells_data.json`, then re-embed it into `outputs/index.html` (see README for the exact command).*
